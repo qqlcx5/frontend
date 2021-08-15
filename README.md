@@ -21,10 +21,10 @@
 ### ES6-ES12系列
 
 ### 移动端系列
-- [移动端1px问题如何解决](移动端系列/移动端1px问题如何解决.md)
+- [移动端1px问题如何解决](./移动端系列/移动端1px问题如何解决.md)
 ### 组件库系列
-- [uni-crab](https://github.com/qqlcx5/uni-crab) 一个自定义多主题色、轻量、简洁的移动端 uniapp UI 框架
-- [nutils-js](https://qqlcx5.github.io/nutils-js-site/) 模块化、高性能的 JavaScript 实用工具库
+- [uni-crab](https://github.com/qqlcx5/uni-crab) 一个自定义主题、轻量、简洁的移动端 uniapp UI 框架
+- [nutils-js](https://github.com/qqlcx5/nutils-js) JavaScript 实用工具库
 
 
 ### Webpack系列
@@ -34,9 +34,8 @@
 
 ### Vuepress系列
 
-- `VuePress`这是一个极简的模版。点击[预览效果](https://qqlcx5.gitee.io/vuepress-template/)
+- `VuePress`这是一个极简的模版。点击[预览效果](https://qqlcx5.gitee.io/vuepress-template/)[仓库](https://github.com/qqlcx5/vuepress-template)
 ### Vuepress插件系列
-
 
 - [vuepress-plugin-notify](https://github.com/qqlcx5/vuepress-plugin-notify) 通知弹出框
 - [vuepress-plugin-musicplayer](https://github.com/qqlcx5/vuepress-plugin-musicplayer) vuepress 音乐插件
