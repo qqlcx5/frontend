@@ -21,7 +21,7 @@
 ### ES6-ES12系列
 
 ### 移动端系列
-- [移动端1px问题如何解决](./移动端系列/移动端1px问题如何解决.md)
+- [移动端1px问题如何解决](移动端系列/移动端1px问题如何解决.md)
 ### 组件库系列
 - [uni-crab](https://github.com/qqlcx5/uni-crab) 一个自定义主题、轻量、简洁的移动端 uniapp UI 框架
 - [nutils-js](https://github.com/qqlcx5/nutils-js) JavaScript 实用工具库
