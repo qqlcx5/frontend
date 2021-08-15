@@ -1,6 +1,6 @@
-# Emoji
+# Github Emoji
 
-Github 表情符号
+Github 表情符号大全
 
 ## 目录
 
