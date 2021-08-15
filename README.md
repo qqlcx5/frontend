@@ -31,6 +31,7 @@
 
 
 ### Github系列
+[Github 表情大全](Github系列/github-emoji)
 
 ### Vuepress系列
 
