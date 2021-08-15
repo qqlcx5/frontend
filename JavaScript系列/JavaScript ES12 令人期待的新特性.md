@@ -1,0 +1,220 @@
+# JavaScript ES12 令人期待的新特性
+## 前言
+
+2021年3月13日，ES2021 候选提案发布了其最终功能集的版本。如果它能够在今年6月的ECMA 大会上通过，就会成为官方的标准！
+
+这个候选提案提及到ECMAScript新特性如下所示：
+
+* String.prototype.replaceAll()
+* Promise.any
+* 逻辑运算符和赋值表达式
+* 数值分隔符
+* WeakRef and Finalizers
+
+这些新的特性已经进入第四阶段且已添加到谷歌 Chrome V8 引擎中。接下来我们来介绍下这些ES2021的新特性吧。
+
+## String.prototype.replaceAll()
+```JavaScript
+const newString = oldString.replaceAll(pattern, replacement);
+```
+该方法返回一个新的字符串，所有 `pattern`会被传递给它的`replacement`替换。 其中`pattern`参数可以是字符串或正则表达式，`replacement`参数可以是字符串或针对每次匹配执行的函数。
+
+`replaceAll`方法是[String.replace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace)方法的续集，[String.replace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace)仅替换`pattern`的第一次找到的位置。
+```javascript
+const str = "Linda is a self-taught developer.Linda will rule the world";
+
+let newStr = str.replace("Linda","Micheal")
+//output: Micheal is a self-taught developer.Linda will rule the world
+
+let newStr = str.replaceAll("Linda","Micheal")
+//output: Micheal is a self-taught developer.Micheal will rule the world
+
+```
+
+以往如果需要替换所有匹配项的话，就要写成正则表达式，才能进行完全替换。
+
+```js
+const str = "hello world, hello code";
+const newStr = str.replace(/hello/g, "hi");
+console.log(newStr); // "hi world, hi code"
+```
+
+现在有了`String.prototype.replaceAll()` 即便是输入字符串也能完全替换匹配项。
+
+```js
+const str = "hello world, hello code";
+const newStr = str.replaceAll("hello", "hi");
+console.log(newStr); // "hi world, hi code"
+```
+
+## Promise.any
+在 ES6 中引入了 `Promise.race()` 和 `Promise.all() `方法，ES2020 加入了 `Promise.allSettled()`。 ES2021 又增加了一个使 `Promise` 处理更加容易的方法：`Promise.any()` 
+![Promise方法](https://upload-images.jianshu.io/upload_images/3174701-48f63aea76c2be92.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+`Promise.any()` 接收一个`Promise`可迭代对象，只要其中的一个 `promise` 成功，就返回那个已经成功的 `promise` （如示例 1 所示）。如果可迭代对象中没有一个 `promise` 成功（即所有的 `promise` 都失败/拒绝），就返回一个失败的 `promise `和`AggregateError`类型的实例（如示例 2 所示），它是 `Error`的一个子类，用于把单一的错误集合在一起。
+
+`Promise.any()`跟`Promise.race()`方法很像，只有一点不同，就是不会因为某个 `Promise` 变成rejected状态而结束。
+
+```javascript
+// 示例1
+Promise.any([
+  new Promise((resolve, reject) => setTimeout(reject, 200, 'Third')),
+  new Promise((resolve, reject) => setTimeout(resolve, 1000, 'Second')),
+  new Promise((resolve, reject) => setTimeout(resolve, 2000, 'First')),
+])
+.then(value => console.log(`Result1: ${value}`))
+.catch (err => console.log(err))
+
+Promise.race([
+  new Promise((resolve, reject) => setTimeout(reject, 200, 'Third')),
+  new Promise((resolve, reject) => setTimeout(resolve, 1000, 'Second')),
+  new Promise((resolve, reject) => setTimeout(resolve, 2000, 'First')),
+])
+.then(value => console.log(`Result2: ${value}`))
+.catch (err => console.log(err))
+
+/**** Output ****/
+// Third
+// Result1: Second
+```
+上面代码中，`Promise.any()`方法的参数数组包含三个 Promise 操作。其中只要有一个变成`fulfilled`，`Promise.any()`返回的 Promise 对象就变成`fulfilled`,而`Promise.race([p1, p2, p3])`里面哪个结果获得的快，就返回那个结果，不管结果本身是成功状态还是失败状态。
+
+如果没有 fulfilled (成功的) promise，`Promise.any()` 返回 `AggregateError` 错误。
+
+```javascript
+// 示例 2
+const pErr1 = new Promise((resolve, reject) => {
+  reject('总是失败1');
+});
+const pErr2 = new Promise((resolve, reject) => {
+  reject('总是失败2');
+});
+Promise.any([pErr1,pErr2]).catch((err) => {
+  console.log(err);
+})
+
+/**** Output ****/
+// "AggregateError: All promises were rejected"
+```
+
+## 逻辑运算符和赋值表达式（&&=，||=，??=）
+
+在 JavaScript 中有许多赋值运算符和逻辑运算符，如以下基本示例：
+
+```JavaScript
+// Assignment Operator Example
+let num = 5
+num+=10
+console.log(num) // 15
+// Logical Operator Example
+let num1 = 6
+let num2 = 3
+console.log(num1 === 6 && num2 === 2) // false
+console.log(num1 === 6 || num2 === 2) // true
+```
+新的提案让我们将能把逻辑运算符和赋值运算符结合起来
+
+### 1、带有 && 运算符的逻辑赋值运算符
+```javascript
+var x = 1;
+var y = 2;
+x &&= y;
+console.log(x); // 2
+```
+第3行的操作等价为：`x && (x = y)`
+或者等价于
+```javascript
+if(x) {
+  x = y
+}
+```
+由于x是真实值，因此赋值了的值y，即2。简而言之，运算符`&&=`仅当 LHS 值为真时，才将 RHS 变量值赋给 LHS 变量。
+
+### 2、带有||的运算符逻辑赋值运算符
+仅当 LHS 值为假时，才将 RHS 变量值赋给 LHS 变量。
+```javascript
+// Logical Assignment Operator with || operator
+let num1
+let num2 = 10
+num1 ||= num2
+console.log(num1) // 10
+// Line 4 can also be written as following ways
+// 1. num1 || (num1 = num2)
+// 2. if (!num1) num1 = num2
+```
+### 3、带有?? 运算符的逻辑赋值运算符
+ES2020 引入了空值合并运算符，其也可以与赋值运算符结合使用。仅当 LHS 为 undefined 或仅为 null 时，才将 RHS 变量值赋给 LHS 变量。
+```javascript
+// Logical Assignment Operator with ?? operator
+let num1
+let num2 = 10
+num1 ??= num2
+console.log(num1) // 10
+num1 = false
+num1 ??= num2
+console.log(num1) // false
+// Line 4 can also be written as following ways
+// num1 ?? (num1 = num2)
+```
+## 数值分隔符
+
+我们将通过使用_（下划线）字符在数字组之间提供分隔，使读取数值更加容易，提高**可读性**。
+
+```javascript
+let x = 100_000; // 100000
+```
+数值分隔符也适用于BigInt数字。
+```javascript
+const trillion = 1000_000_000_000n;
+console.log(trillion.toString()); // "1000000000000"
+```
+分隔符仅出于可读性目的。因此，它可以放置在数字中的任何位置。
+```javascript
+const amount = 178_00;
+console.log(amount.toString()); // "17800"
+```
+## WeakRef and Finalizers
+
+此功能包含两个高级对象 `WeakRef `和 `FinalizationRegistry`。根据使用情况，这些接口可以单独使用，也可以一起使用。**官方建议不要轻易使用 `WeakRef` 和 `finalizer`。**其中一个原因是它们可能不可预测，另一个是它们并没有真正帮 gc 完成工作，实际上可能会垃圾回收的工作更加困难。
+
+在 JavaScript 中，当你创建了一个创建对象的引用时，这个引用可以防止对象被垃圾收集，也就是说 JavaScript 无法删除对象并释放其内存。只要对该对象的引用一直存在，就可以使这个对象永远存在。
+
+ES2021 了新的类 `WeakRefs`。允许创建对象的弱引用。这样就能够在跟踪现有对象时不会阻止对其进行垃圾回收。对于缓存和对象映射非常有用。
+
+必须用 `new`关键字创建新的 `WeakRef `，并把某些对象作为参数放入括号中。当你想读取引用（被引用的对象）时，可以通过在弱引用上调用 `deref()` 来实现。
+```JavaScript
+const myWeakRef = new WeakRef({
+  name: '星野',
+  year: '25'
+})
+
+myWeakRef.deref()
+// => {  name: '星野', year: '25' }
+
+myWeakRef.deref().name
+// => '星野'
+```
+与 `WeakRef` 紧密相连的还有另一个功能，名为 `finalizers` 或 `FinalizationRegistry`。这个功能允许你注册一个回调函数，这个回调函数将会在对象被垃圾回收时调用。
+```javascript
+// 创建 FinalizationRegistry:
+const reg = new FinalizationRegistry((val) => {
+  console.log(val)
+})
+
+(() => {
+  // 创建新对象:
+  const obj = {}
+
+  //为 “obj” 对象注册 finalizer：
+  //第一个参数：要为其注册 finalizer 的对象。
+  //第二个参数：上面定义的回调函数的值。
+  reg.register(obj, 'obj has been garbage-collected.')
+})()
+// 当 "obj" 被垃圾回收时输出：
+// 'obj has been garbage-collected.'
+```
+## 参考文章
+- [ES2021 / ES12 New Features](https://backbencher.dev/javascript/es2021-new-features)
+- [Everything new coming in ES2021](https://dev.to/albertomontalesi/everything-new-coming-in-es2021-2l5l)
+- [JavaScript ES2021 Exciting Features](https://codeburst.io/exciting-features-of-javascript-es2021-es12-1de8adf6550b)
+-  [即将发布的 ES2021（ES12）中有哪些有趣的功能](https://segmentfault.com/a/1190000039366784)
