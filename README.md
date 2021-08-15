@@ -7,7 +7,7 @@
 ![pubic_w](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@v1.0.0/image/public_w.jpg)
 
 ### 程序员书签
-- [coder-bookmarks](https://github.com/qqlcx5/coder-bookmarks)
+- [coder-bookmarks](https://github.com/qqlcx5/coder-bookmarks/blob/dev/docs/website/pages.md)
 ### Vue系列
 - [令人眼前一亮的Vue实战技巧](Vue系列/令人眼前一亮的Vue实战技巧.md)
 - [助你开发更高效的10个Vue指令](Vue系列/助你开发更高效的10个Vue指令.md)
