@@ -42,7 +42,7 @@
 [解决GitHub下载速度缓慢的问题](Github系列/解决GitHub下载速度缓慢的问题.md)
 [GitHub + jsDelivr + PicGo打造免费图床](Github系列/GitHub+jsDelivr+PicGo打造免费图床.md)
 [利用jsDelivr白嫖全球超高速静态资源访问服务](Github系列/利用jsDelivr白嫖全球超高速静态资源访问服务.md)
-[Github 表情大全](Github系列/github-emoji.md)
+[Github 表情大全](Github系列/Github表情大全.md.md)
 
 ### Vuepress系列
 
