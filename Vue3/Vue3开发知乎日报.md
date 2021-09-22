@@ -1,4 +1,4 @@
-# 基于Vue3.0开发知乎日报
+# Vue3.0开发知乎日报实战
 
 ![vue](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.0/img/20200723154936.jpg)
 
@@ -6,7 +6,7 @@
 
 一个简单的小项目，基于`Vue3.0` + `axios` + `swiper`实现。让大家对Vue3.0 API有一些新的认识。
 
-![zhihu](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.0/img/20200723161029.jpg)
+![zhihu](media/15953813415643/zhihu.gif)
 
 ## 前言
 
@@ -360,7 +360,7 @@ Vue3.0路由还在开发中，暂时还未能获取路由的参数API，只能�
 
 我在Vue3.0中，我先声明了响应式数据，通过Vue2.0获取路由参数后，尝试`this.id = xx`  打印下`log`，输出this对象如下，功能实现了。
 
-![-w388](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.0/img/20200723154931.jpg)
+![-w388](media/15953813415643/15954883956535.jpg)
 
 然而`reactive`的方式去声明响应式数据，其他不变，发现并能查到`id`。深入之后了解到`ref`和Vue2.0的`data( return {} )`底层原理都是基于`Object.definedproperty`实现，所以可以通过this去修改。`reactive`则式`Prxoy`实现的。还有ref中包裹是个对象话，也会通过`Prxoy`实现。
 
@@ -403,10 +403,6 @@ export default {
 
 Vue3.0实现知乎日报个人感觉还是不错，新写法或多或少有些不习惯，比如有个`toRef`少写s，调试了半天也没报错，好在后面注意到了。多写几次后就会习惯，对比Vue3.0的各方面提升，一些写法的变化，无可厚非。所以还是尽快去熟悉Vue3.0的知识，等UI库等兼容Vue3.0版本上线就正式使用了。相信这一天很快来临。
 
-## 订阅
-
-![WeChat](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.1/img/WeChat.png)
-
 参考链接：
 
-[珠峰架构课—需付费](http://www.javascriptpeixun.cn/course/1435/task/117818/show)
+- http://www.javascriptpeixun.cn/course/1435/task/117818/show

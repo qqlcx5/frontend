@@ -180,12 +180,3 @@ Fliqlo 是一款非常简洁的Mac OS设备时钟屏保应用程序。
 显示Apple在纽约，旧金山，夏威夷，中国等地拍摄的空中电影。
 
 [官网](https://github.com/JohnCoates/Aerial) https://github.com/JohnCoates/Aerial
-
-## 结语
-
-说真的，我也不知道为什么对工具感兴趣，或者是打算时间的一种爱好吧。
-
-## 订阅
-
-![WeChat](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.1/img/WeChat.png)
-

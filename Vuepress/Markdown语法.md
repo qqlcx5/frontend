@@ -1,4 +1,4 @@
-# Markdown 语法快速入门
+# Markdown语法
 
 ## 前言
 Markdown 是一种轻量级的「标记语言」，创始人为约翰·格鲁伯，用简洁的语法代替排版，目前被越来越多的知识工作者、写作爱好者、程序员或研究员广泛使用。其常用的标记符号不超过十个，相对于更为复杂的 HTML 标记语言来说，Markdown 十分的轻量，学习成本也不需要太多，且一旦熟悉这种语法规则，会有沉浸式编辑的效果。
@@ -168,7 +168,3 @@ SET_WSORDERLISTEN: (state, wsOrderListen) => {
 1. 列表内容
 2. 列表内容
 3. 列表内容
-
-## 订阅
-
-![WeChat](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.1/img/WeChat.png)

@@ -1,8 +1,8 @@
-# 使用 GitHub Actions 自动部署 VuePress
+# VuePress自动部署
 
-假设你的文章和静态文件在同一个仓库，使用 `master` 分支管理文章和代码，使用 `gh-pages` 分支存放生成的静态文件。
+假设你的文章和静态文件在同一个仓库，使用 `master` 分支管理文章，使用 `gh-pages` 分支存放`VuePress`生成的静态文件。
 
-一般部署博客的流程是：
+部署`VuePress`的流程是：
 
 - 项目打包生成静态文件：`npm run build`
 - 切换打包`dist`目录下
@@ -31,7 +31,6 @@ GitHub官方也考虑相关的问题，然后就有了`GitHub Actions`，
 GitHub Actions 是 GitHub 的持续集成服务，于2018年10月推出。
 
 那么开始打造我们的 GitHub Actions。
-
 ## GitHub Actions
 
 ### 生成个人访问令牌token
@@ -42,7 +41,7 @@ GitHub Actions 是 GitHub 的持续集成服务，于2018年10月推出。
 
 填写 `Token` 描述，勾选 repo、write、read然后点击 `Generate token` 生成一个 `Token`
 
-![token](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.0/img/20200712181312.jpg)
+![token](media/15941321303313/15945467642127.jpg)
 
 因为 Token 只会显示一次，所以先保存笔记本等。
 
@@ -52,7 +51,7 @@ GitHub Actions 是 GitHub 的持续集成服务，于2018年10月推出。
 
 在存放博客仓库里，添加个人访问令牌。
 
-![-w1415](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.0/img/20200712181309.jpg)
+![-w1415](media/15945439850942/15945470533312.jpg)
 
 令牌名字取名为：ACCESS_TOKEN，复制个人访问令牌密钥进去，保存。
 
@@ -116,18 +115,15 @@ jobs:
 
 通过`Action`可以查看项目的部署流程。
 
-![-w1083](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.0/img/20200712181306.jpg)
+![-w1083](media/15945439850942/15945482529364.jpg)
 
 部署失败，会接收到GitHub发送的邮件，点击图片的标题进入页面查看日志。
 
-![-w1398](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.0/img/20200712181316.jpg)
+![-w1398](media/15945439850942/15945485535600.jpg)
 
 正常来说没什么问题。享受 GitHub Actions 带来的愉快体验吧~
-
-## 订阅
-
-![WeChat](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.1/img/WeChat.png)
 
 参考链接：
 
 - [使用 GitHub Actions 自动部署博客](https://vuepress-theme-reco.recoluan.com/views/other/github-actions.html#%E8%AE%BE%E7%BD%AE-secrets)
+

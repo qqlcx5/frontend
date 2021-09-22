@@ -1,12 +1,19 @@
 # Vue 理解响应式原理
 
 ## 前言
+ JavaScript 中，数据分为两种类型：
+ - 基本类型：`undefined`、`null`、`string`、`number`、`boolean`、`symbol`
+引用类型：`Object`、`Array`、`RegExp`、`Date`、`Function`
 
-站在一个工作几年的过来的人视角，看待对Vue响应式原理。
+基本类型的值是存放在**栈区**的，即内存中的栈内存
+
+引用类型的值是同时保存在**栈内存和堆内存**的
+
+`//...`
 
 ### 对于对象
 
-```js
+```vue
 <template>
   <div>
     <h5>名称：{{obj.name}}</h5>
@@ -57,7 +64,7 @@ export default {
 假设我需要赋值多个新属性情况下，按照上面的写法是不是太冗余了，其实我们可以通过`Object.assign()` 或 `_.extend()`
 来更新数据。
 
-```
+```js
 this.obj = Object.assign(this.obj, { a: 1, b: 2 })
 // 代替上面这种方法。
 this.obj = Object.assign({}, this.obj, { a: 1, b: 2 })
@@ -65,7 +72,7 @@ this.obj = Object.assign({}, this.obj, { a: 1, b: 2 })
 
 ### 对于数组
 
-```js
+```vue
 <template>
   <div>
     <h5>名称：{{arr}}</h5>

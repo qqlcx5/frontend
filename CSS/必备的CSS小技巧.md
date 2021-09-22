@@ -1,12 +1,12 @@
 # 必备的CSS小技巧
 
-积累了几个有趣的CSS小技巧。
+项目中必备的一些CSS样式。
 
 ## 清除默认样式
 
 ### reset.css
 
-```
+```css
 html,body,h1,h2,h3,h4,h5,h6,div,dl,dt,dd,ul,ol,li,p,blockquote,pre,hr,figure,table,caption,th,td,form,fieldset,legend,input,button,textarea,menu{margin:0;padding:0;}
 header,footer,section,article,aside,nav,hgroup,address,figure,figcaption,menu,details{display:block;}
 table{border-collapse:collapse;border-spacing:0;}
@@ -238,7 +238,6 @@ html {
 
 ## 1px 下划线
 
-
 ```
 .c-underline,
 .c-underline__top,
@@ -319,7 +318,7 @@ html {
 ## 间距简写
 
 在0-80以内，是4的倍数或者是12的倍数。
-
+**html**
 ```html
 <!--内边距24像素-->
 <div class="p24"></div>
@@ -330,7 +329,7 @@ ptb 上下内边距
 plr 左右内边距
 p t b l r上下左右边距
 ```
-
+**scss**
 ```scss
 // 定义内外边距，历遍1-80
 @for $i from 0 through 80 {
@@ -370,6 +369,6 @@ p t b l r上下左右边距
 
 ### 参考文献
 
-- [CSS命名约定将节省您的调试时间](https://medium.com/free-code-camp/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849)
-- [22-essential-css-recipes](http://ipestov.com/22-essential-css-recipes/)
-- [vant](https://vant-contrib.gitee.io/vant/#/zh-CN/)
+- https://medium.com/free-code-camp/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849
+- http://ipestov.com/22-essential-css-recipes/
+- https://vant-contrib.gitee.io/vant/#/zh-CN/

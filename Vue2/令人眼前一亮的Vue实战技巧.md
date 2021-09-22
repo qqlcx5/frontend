@@ -2,14 +2,231 @@
 ## 前言
 本文主要介绍日常项目开发过程中的一些技巧，不仅可以帮助提升工作效率，还能提高应用的性能。以下是我总结一些平时工作中的经验。
 
-## minxin 让组件复用灵活化（待完善）
+## minxin 让组件复用灵活化
 Vue提供了minxin这种在组件内插入组件属性的方法，个人建议这货能少用就少用，但是有个场景则非常建议使用minxin：当某段代码重复出现在多个组件中，并且这个重复的代码块很大的时候，将其作为一个minxin常常能给后期的维护带来很大的方便。
 
-局部混入  不建议大家用全局混入 写好注释
+这是项目中封装一个列表功能，有下拉刷新，加载自动请求数据，上拉加载下一页数据等等，它是这样的
 
-##  拯救繁乱的template--render函数（待完善）
+看不懂没关系我只是开发中举了一个例子
+
+```js
+export default {
+    data() {
+        return {
+            page: 1,
+            limit: 10,
+            busy: false, // 请求拦截，防止多次加载
+            finish: false, // 是否请求完成，用于页面展示效果
+            pageList: [], // 页面数据
+            reqParams: {}, // 页面请求参数，可被改变的
+            defaultParams: {}, // 页面请求参数，下拉刷新不会被重置的改变
+            routeName: '', // 特殊情况，页面需要复用别人的list的时候
+            autoReq: true, // onload是否自己去请求
+            lodingText: '', // 请求中底部显示的文案
+            noDataText: '暂无数据', // 自定义无数据文案
+            lastText: '- 我是有底线的 -',
+            noData: false, // 页面无数据
+            reqName: ''
+        }
+    },
+    created() {
+        this.autoReq && this.initPage(false, true)
+    },
+    onPullDownRefresh() {
+        this.pullDownRefreshFn()
+    },
+    onReachBottom() {
+        this.reachBottomFn()
+    },
+    methods: {
+        // 重置初始化数据
+        initPage(saveParams = true, refresh = false) {
+            // 初始化所有变量
+            this.page = 1
+            this.busy = false
+            this.finish = false
+            this.noData = false
+            this.lodingText = '数据加载中'
+            if (saveParams) {
+                const { page, limit } = this.reqParams
+                page ? this.page = page : ''
+                limit ? this.limit = limit : ''
+            } else {
+                this.reqParams = {}
+            }
+            this.getCommonList(refresh)
+        },
+        // 下拉刷新函数
+        pullDownRefreshFn() {
+            this.initData()
+            this.initPage(false, true)
+        },
+        // 上啦加载函数
+        reachBottomFn() {
+            this.getCommonList()
+        },
+        // 重置数据,方便调用（一般在外面自定义清空一些数据）
+        initData() { // 重置data里面的变量，方便外面引用这个mixin的时候，下拉刷新重置变量
+
+        },
+        // 列表获取数据接口
+        async getCommonList(refresh) {
+            if (!this.reqName) return
+            if (this.busy) return
+            this.busy = true
+            this.finish = false
+            const httpFn = this.$http || getApp().globalData.$http// 兼容nvue
+            try {
+                const query = {
+                    ...this.defaultParams,
+                    ...this.reqParams,
+                    page: this.page,
+                    limit: this.limit
+                }
+                const { data } = await httpFn(this.reqName, query)
+                if (this.page === 1) this.pageList = []
+                /**
+                 * [Node.JS中用concat和push连接两个或多个数组的性能比较](http://ourjs.com/detail/5cb3fe1c44b4031138b4a1e2)
+                 * 那么两者在node.js的性能如何？ 我们做了一组测试数据，两种分别测试100万次。
+                 * push比concat方法快3倍左右。因为push只是在原数组的基础上进行修改，所以会快一点。
+                 * push返回的是数组的长度，所以没重新定义变量再判断了
+                 * [Array.prototype.push.apply(arr1, arr2)无法自动触发DOM更新](https://www.imooc.com/wenda/detail/494323)
+                 * 因为 this.pageList.push !== Array.prototype.push,，this.pageList.push指向的是vue重写过的方法
+                 */
+                this.finish = true
+                const resLen = data.list ? data.list.length : 0
+                if (resLen === 0) {
+                    this.resSuccess(data, refresh)
+                    return
+                }
+                const listLen = this.pageList.push.apply(this.pageList, data.list)
+                if (listLen < data.count && this.limit <= resLen) { // 说明还有数据
+                    this.busy = false
+                    this.page = Math.ceil(listLen / this.limit) + 1
+                }
+                this.resSuccess(data, refresh)
+            } catch (e) {
+                // 防止接口报错锁死
+                this.busy = false
+                this.finish = true
+            }
+        },
+        resSuccess(data, refresh) {
+            if (this.finish && this.busy) {
+                if (this.pageList.length > 0) {
+                    this.$nextTick(() => {
+                        setTimeout(() => {
+                            this.lodingText = this.lastText
+                        }, 100)
+                    })
+                } else {
+                    this.lodingText = this.noDataText
+                    this.noData = true
+                }
+            }
+            refresh && uni.stopPullDownRefresh()
+            this.finishInit(data)
+        },
+        // 请求完成做点什么（方便外面导入的文件自己引用）
+        finishInit(data) { // 请求完成做点什么
+            // console.log('列表请求完成');
+        }
+    }
+
+}
+```
+很多人看到着应该很好奇为什么不封装成一个组件，但是由于很多列表样式不尽相同，所以封装成一个组件可扩展性不高。
+现在我们可以这样使用。
+
+```vue
+<template>
+  <view class="c-recommend-goods">
+    <!-- 列表样式 -->
+    <view class="" v-for="item in pageList" :key="item.id">{{item}}</view>
+    <!-- 空状态&& 加载中等小提示 -->
+    <c-no-data v-if="lodingText" :show-img="noData" :text="lodingText"></c-no-data>
+  </view>
+</template>
+
+<script>
+import listMixins from '@/common/mixins/list.js'
+export default {
+  mixins: [listMixins],
+  data() {
+    return {
+      autoReq: false, // 进入页面自动请求数据
+      reqParams: {}, // 请求参数
+      reqName: 'userCompanyList' // 请求地址
+    }
+  }
+}
+</script>
+
+<style></style>
+```
+我们只要定义请求参数和请求的地址，还有列表的样式，就能实现一个不错的列表功能。
+
+##  拯救繁乱的template--render函数
 - template里存在一值多判断
 - 代码冗亲，代码杂乱
+
+举一个官方文档的例子
+
+```js
+<template>
+  <div>
+    <h1 v-if="level === 1">
+      <slot></slot>
+    </h1>
+    <h2 v-else-if="level === 2">
+      <slot></slot>
+    </h2>
+    <h3 v-else-if="level === 3">
+      <slot></slot>
+    </h3>
+    <h4 v-else-if="level === 4">
+      <slot></slot>
+    </h4>
+    <h5 v-else-if="level === 5">
+      <slot></slot>
+    </h5>
+    <h6 v-else-if="level === 6">
+      <slot></slot>
+    </h6>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {}
+  },
+  props: {
+    level: {
+      type: Number,
+      required: true,
+    },
+  },
+}
+</script>
+```
+现在使用 render 函数重写上面的例子：
+```
+<script>
+  export default {
+    props: {
+      level: {
+        require: true,
+        type: Number,
+      }
+    },
+    render(createElement) {
+      return createElement('h' + this.level, this.$slots.default);
+    }
+  };
+</script>
+```
+
 
 ## 一劳永逸的组件注册
 组件使用前，需要引入后再注册：
@@ -69,13 +286,6 @@ import index from './components/global.js'
 Vue.use(index)
 ```
 最后我们就可以随时随地在页面中使用这些高频组件，无需再手动一个个引入了。
-
-##  小项目Vuex的替代方案--Vue.observable()（待完善）
-
-Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。但如果我们开发非大型单页应用，使用 Vuex 可能是繁琐冗余的，有点大材小用了。所以如果说小项目的状态管理，我们不妨用2.6版本新增`Vue.observable()` ，通过使用这个 api 我们可以应对一些简单的跨组件数据状态共享。
-
-
-
 
 ## 隐藏的大招--hook
 开发过程中我们有时候要创建一个定时器，在组件被销毁之前，这个定时器也要销毁。代码如下：

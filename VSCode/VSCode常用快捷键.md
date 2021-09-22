@@ -106,14 +106,10 @@ Windows/Linux: Shift + Alt
 
 ### 修改“符号” 「Rename Symbol」
 VSCode默认支持JavaScript和TypeScript的方法名、类名和属性名等符号修改。在修改后，文件下引用到这些符号的地方都会被自动的同时修改。其他语言的支持需要插件。
-```
+```sh
 Mac: F2
 Windows/Linux: F2
 ```
-
-## 订阅
-
-![WeChat](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.1/img/WeChat.png)
 
 参考链接：
 

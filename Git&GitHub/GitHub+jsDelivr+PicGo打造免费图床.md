@@ -16,7 +16,7 @@
 1. 新建 GitHub 仓库
 2. 创建个人访问令牌
 3. 配置 PicGo 设置
-4. 上传图片，转成 jsDelivr 地址
+4. 上传图片，获取jsDelivr 地址
 
 ### 新建 GitHub 仓库
 
@@ -73,10 +73,6 @@
 
 [GitHub 通过 jsdelivr CDN加持](https://qqlcx5.github.io/other/github/)
 
-## 订阅
 
-![WeChat](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.1/img/WeChat.png)
-
-参考链接： 
-
-[https://www.cnblogs.com/sitoi/p/11848816.html](https://www.cnblogs.com/sitoi/p/11848816.html)
+参考文章
+- [https://www.cnblogs.com/sitoi/p/11848816.html](https://www.cnblogs.com/sitoi/p/11848816.html)
