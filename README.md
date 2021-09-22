@@ -29,16 +29,15 @@
 ### 工具
 
 
-- [Chrome插件推荐](工具/Chrome插件推荐)
-- [Mac常用软件推荐](工具/Mac常用软件推荐)
-- [Mac终端替代工具iTerm2](工具/Mac终端替代工具iTerm2)
-- [VSCode插件推荐](工具/VSCode插件推荐)
-- [VSCode常用快捷键](工具/VSCode常用快捷键)
+- [Chrome插件推荐](Chrome/Chrome插件推荐)
+- [Mac常用软件推荐](Chrome/Mac常用软件推荐)
+- [Mac终端替代工具iTerm2](Mac/Mac终端替代工具iTerm2)
+- [VSCode插件推荐](VSCode/VSCode插件推荐)
+- [VSCode常用快捷键](VSCode/VSCode常用快捷键)
 ### Webpack系列
 利用jsDelivr白嫖全球超高速静态资源访问服务
 
 ### Github系列
-[科学上网推荐](Github系列/如何访问谷歌YouTube等网站.md)
 [解决GitHub下载速度缓慢的问题](Github系列/解决GitHub下载速度缓慢的问题.md)
 [GitHub + jsDelivr + PicGo打造免费图床](Github系列/GitHub+jsDelivr+PicGo打造免费图床.md)
 [利用jsDelivr白嫖全球超高速静态资源访问服务](Github系列/利用jsDelivr白嫖全球超高速静态资源访问服务.md)
