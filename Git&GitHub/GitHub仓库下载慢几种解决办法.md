@@ -2,16 +2,11 @@
 
 **目录**
 
-1. vps/代理
-2. 码云中转下载
+1. GitClone缓存加速
+2. 码云中转
 3. cnpmjs镜像
 4. hosts
-5. GitClone 缓存加速(新)
-
-## 科学的上网
-
-全局上网后如果下载速度并没有显著提升的话，搭配代理`Proxifier`等工具。
-
+5. 科学上网
 
 ## 码云
 登录码云官网后点击 `+` 选择从GitHub导入仓库。
@@ -126,10 +121,6 @@ git config --global url."https://gitclone.com/github.com/".insteadOf https://git
 
 了解更多[前往gitclone官网](https://gitclone.com/)
 
-## 订阅
-
-![WeChat](https://cdn.jsdelivr.net/gh/qqlcx5/figure-bed@1.1/img/WeChat.png)
-
-参考链接
+参考文章
 
 [https://www.jianshu.com/p/0493dcc15d6f](https://www.jianshu.com/p/0493dcc15d6f)
